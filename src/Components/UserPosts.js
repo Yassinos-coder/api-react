@@ -9,23 +9,25 @@ import noLogo from '../img/unknwn.png'
 function UserPosts() {
     const location = useLocation();
     const [userPost, setUserPost] = useState([])
-    const id = location.state.id
-    const profile_name = location.state.name
-    const profile_username= location.state.username
-    const profile_phone= location.state.phone
-    const profile_email= location.state.email
-    const profile_web= location.state.web
-
+    localStorage.setItem("user_id", location.state.id); // store user id in browser
+    localStorage.setItem("name", location.state.name)
+    localStorage.setItem("username", location.state.username)
+    localStorage.setItem("phone", location.state.phone)
+    localStorage.setItem("email", location.state.email)
+    localStorage.setItem("web", location.state.web)
+    let id;
+    (!location.state.id  || !id ) ? id = localStorage.user_id : id = location.state.id
 
     useEffect(() => {
         axios.get(`https://jsonplaceholder.typicode.com/posts?userId=${id}`)
             .then(userPosting => setUserPost(userPosting.data))
-            .catch(err => console.error(err))
+            .catch(err => console.error('error in api'+ err))
     },[id]);
+    
 
     return (
     <>
-        <div className="Header">
+        <div className="Header">s
             <Link to="/">
                 <button className='header-home-btn'>Home</button>
             </Link>
@@ -35,7 +37,7 @@ function UserPosts() {
                 <div  className="profileBox">
                     <img className='user-posts-img-noLogo' src={noLogo} alt="" />
                     <div className="p-profileBoxData">
-                        <p>Name:  { location.state.name }</p>
+                        <p>Name:  { location.state.name } </p>
                         <p>UserName:  { location.state.username }</p>
                         <p>PhoneNumber:  { location.state.phone }</p>
                         <p>Email:  { location.state.email }</p>
@@ -53,7 +55,7 @@ function UserPosts() {
                                 <p className='post-title'>{post.title}</p>
                                 <h3 className='body-caption'>Caption</h3> <br />
                                 <p className="post-body"> {post.body} </p>
-                                <Link to={`/posts/${id}/comments/${post.id}`}  state={{post_id:post.id, user_id: id , name: profile_name, username: profile_username,phone: profile_phone,email: profile_email, web:profile_web 
+                                <Link to={`/posts/${id}/comments/${post.id}`}  state={{post_id:post.id, user_id: id , name: localStorage.name, username: localStorage.username,phone: localStorage.phone,email: localStorage.email, web:localStorage.web 
                                 ,post_title : post.title,post_body:post.body
                                 }}>
                                     <button className='posts-comments-btn'>See Comments</button>

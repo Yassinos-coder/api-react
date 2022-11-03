@@ -8,14 +8,15 @@ import noLogo from '../img/unknwn.png'
 const CommentsOnPosts = () => {
     const location = useLocation();
     const [Comments, setComments] = useState([]);
+    // post_* is to pass post data for display in commentsOnPosts 
     const post_id = location.state.post_id
     const post_title = location.state.post_title
     const post_body = location.state.post_body
-    console.log(location.state.user_id)
+    const user_id_stored = localStorage.user_id // get user id stored in browser
     useEffect(() => {
         axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${post_id}`)
         .then(postComments =>setComments(postComments.data))
-        .catch(err => console.error(err))
+        .catch(err => console.error('error in api'+ err))
     })
   return (
     <>
@@ -23,7 +24,7 @@ const CommentsOnPosts = () => {
             <Link to="/">
                 <button className='header-home-btn'>Home</button>
             </Link>
-            <Link to={`/posts/${location.state.user_id}`}>
+            <Link to={`/posts/${user_id_stored}`}>
                 <button className='header-posts-btn'>Back to posts</button>
             </Link>
         </div>

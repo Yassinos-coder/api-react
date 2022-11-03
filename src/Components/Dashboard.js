@@ -11,12 +11,12 @@ import '../App.css'
 const Dashboard = (props) => {
     const [userList, setUserList] = useState([]);
 
-
   useEffect(() => {
     axios.get("https://jsonplaceholder.typicode.com/users")
     .then(userRes => setUserList(userRes.data))
     .catch(err =>console.log(err))
   },[]);
+
   return (
    <>
 
