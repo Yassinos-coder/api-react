@@ -18,10 +18,10 @@ function UserPosts() {
     localStorage.setItem("posts", JSON.stringify(location.state.posts))
 
     let id;
-
-
+    (!id ) ?  id = localStorage.user_id : id = location.state.id 
+    const idid = location.state.id 
     useEffect (() => {
-        axios.get(`https://jsonplaceholder.typicode.com/posts?userId=${id}`)
+        axios.get(`https://jsonplaceholder.typicode.com/posts?userId=${idid}`)
             .then(userPosting => setUserPost(userPosting.data))
             .catch(err => console.error('error in api'+ err))
     },[id]);

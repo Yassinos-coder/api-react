@@ -23,7 +23,8 @@ const Dashboard = () => {
    <div className="App">
       <div className="userDisplay">
         {
-          userList.map((user, id) =>(
+          userList.map((user, id) =>
+          ( 
             <>
               <div key={id} className="userBox">
                 <img className='noLogo-img' src={ noLogo } alt="No Profile" />
