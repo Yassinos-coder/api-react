@@ -8,7 +8,7 @@ import '../App.css'
 // Get User By Id API : https://jsonplaceholder.typicode.com/posts?userId=1
 // Get Post of User By ID API : https://jsonplaceholder.typicode.com/comments?postId=1
 
-const Dashboard = (props) => {
+const Dashboard = () => {
     const [userList, setUserList] = useState([]);
 
   useEffect(() => {

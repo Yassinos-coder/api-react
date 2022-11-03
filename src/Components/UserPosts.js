@@ -1,6 +1,6 @@
 import '../App';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect  } from 'react';
 import commentsBanner from '../img/comments.png'
 import { useLocation, Link } from "react-router-dom";
 import noLogo from '../img/unknwn.png'
@@ -9,25 +9,26 @@ import noLogo from '../img/unknwn.png'
 function UserPosts() {
     const location = useLocation();
     const [userPost, setUserPost] = useState([])
-    localStorage.setItem("user_id", location.state.id); // store user id in browser
+    localStorage.setItem("user_id", location.state.user_id_stored); // store user id in browser
     localStorage.setItem("name", location.state.name)
     localStorage.setItem("username", location.state.username)
     localStorage.setItem("phone", location.state.phone)
     localStorage.setItem("email", location.state.email)
     localStorage.setItem("web", location.state.web)
-    let id;
-    (!location.state.id  || !id ) ? id = localStorage.user_id : id = location.state.id
+    localStorage.setItem("posts", JSON.stringify(location.state.posts))
 
-    useEffect(() => {
+    let id;
+
+
+    useEffect (() => {
         axios.get(`https://jsonplaceholder.typicode.com/posts?userId=${id}`)
             .then(userPosting => setUserPost(userPosting.data))
             .catch(err => console.error('error in api'+ err))
     },[id]);
-    
 
     return (
     <>
-        <div className="Header">s
+        <div className="Header">
             <Link to="/">
                 <button className='header-home-btn'>Home</button>
             </Link>
@@ -55,8 +56,8 @@ function UserPosts() {
                                 <p className='post-title'>{post.title}</p>
                                 <h3 className='body-caption'>Caption</h3> <br />
                                 <p className="post-body"> {post.body} </p>
-                                <Link to={`/posts/${id}/comments/${post.id}`}  state={{post_id:post.id, user_id: id , name: localStorage.name, username: localStorage.username,phone: localStorage.phone,email: localStorage.email, web:localStorage.web 
-                                ,post_title : post.title,post_body:post.body
+                                <Link to={`/posts/${id}/comments/${post.id}`}  state={{post_id:post.id, user_id: id , name: location.state.name, username: location.state.username, phone: location.state.phone,email: location.state.email, web:location.state.name
+                                ,post_title : post.title,post_body:post.body, user_posts:userPost
                                 }}>
                                     <button className='posts-comments-btn'>See Comments</button>
                                 </Link>
