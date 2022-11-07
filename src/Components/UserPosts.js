@@ -9,19 +9,25 @@ import noLogo from '../img/unknwn.png'
 function UserPosts() {
     const location = useLocation();
     const [userPost, setUserPost] = useState([])
-    localStorage.setItem("user_id", location.state.user_id_stored); // store user id in browser
+    localStorage.setItem("user_id", location.state.id); // store user id in browser
     localStorage.setItem("name", location.state.name)
     localStorage.setItem("username", location.state.username)
     localStorage.setItem("phone", location.state.phone)
     localStorage.setItem("email", location.state.email)
     localStorage.setItem("web", location.state.web)
-    localStorage.setItem("posts", JSON.stringify(location.state.posts))
+    localStorage.setItem("posts", JSON.stringify(userPost))
+
+    // Used Location to get id 
+    const link = window.location.href
+    const in_url_id = link.split('/')
+    const id_in_url = in_url_id[4]
 
     let id;
-    (!id ) ?  id = localStorage.user_id : id = location.state.id 
-    const idid = location.state.id 
+    (!id ) ? id = id_in_url : id = location.state.id 
+
+
     useEffect (() => {
-        axios.get(`https://jsonplaceholder.typicode.com/posts?userId=${idid}`)
+        axios.get(`https://jsonplaceholder.typicode.com/posts?userId=${id}`)
             .then(userPosting => setUserPost(userPosting.data))
             .catch(err => console.error('error in api'+ err))
     },[id]);
@@ -57,7 +63,7 @@ function UserPosts() {
                                 <h3 className='body-caption'>Caption</h3> <br />
                                 <p className="post-body"> {post.body} </p>
                                 <Link to={`/posts/${id}/comments/${post.id}`}  state={{post_id:post.id, user_id: id , name: location.state.name, username: location.state.username, phone: location.state.phone,email: location.state.email, web:location.state.name
-                                ,post_title : post.title,post_body:post.body, user_posts:userPost
+                                ,post_title : post.title,post_body:post.body
                                 }}>
                                     <button className='posts-comments-btn'>See Comments</button>
                                 </Link>

@@ -13,7 +13,6 @@ const CommentsOnPosts = () => {
     const post_title = location.state.post_title
     const post_body = location.state.post_body
     const user_id_stored = location.state.user_id // get user id stored in browser
-    const posts = location.state.user_posts
     useEffect(() => {
         axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${post_id}`)
         .then(postComments =>setComments(postComments.data))
@@ -26,7 +25,7 @@ const CommentsOnPosts = () => {
                 <button className='header-home-btn'>Home</button>
             </Link>
             <Link to={`/posts/${user_id_stored}`} 
-            state={{user_id_stored, name: localStorage.name, username: localStorage.username, phone: localStorage.phone, email: localStorage.email, web: localStorage.web, posts}}>
+            state={{user_id_stored, name: localStorage.name, username: localStorage.username, phone: localStorage.phone, email: localStorage.email, web: localStorage.web}}>
                 <button className='header-posts-btn'>Back to posts</button>
             </Link>
         </div>
